@@ -54,7 +54,7 @@ export default function HearItInAction() {
     home: "/audio/home-services.mp3",
     financial: "/audio/financial-services.mp3",
     healthcare: "/audio/healthcare.mp3",
-    realEstate: "/audio/real-estate.mp3",
+    "real-estate": "/audio/real-estate.mp3",
     retail: "/audio/retail.mp3",
     education: "/audio/education.mp3",
   };
