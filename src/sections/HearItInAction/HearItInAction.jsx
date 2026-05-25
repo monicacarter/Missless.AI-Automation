@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useRef, useState } from "react";
 import {
   AudioLines,
   Zap,
@@ -47,7 +47,41 @@ const iconMap = {
  */
 export default function HearItInAction() {
   const [activeIndustry, setActiveIndustry] = useState(hearItIndustries[0].id);
+  const audioRef = useRef(null);
+  const [isPlaying, setIsPlaying] = useState(false);
 
+  const audioFiles = {
+    home: "/audio/home-services.mp3",
+    financial: "/audio/financial-services.mp3",
+    healthcare: "/audio/healthcare.mp3",
+    realEstate: "/audio/real-estate.mp3",
+    retail: "/audio/retail.mp3",
+    education: "/audio/education.mp3",
+  };
+
+  const handleIndustryChange = (industryId) => {
+    setActiveIndustry(industryId);
+    setIsPlaying(false);
+
+    if (audioRef.current) {
+      audioRef.current.pause();
+      audioRef.current.currentTime = 0;
+      audioRef.current.load();
+    }
+  };
+
+  const toggleAudio = async () => {
+    const audio = audioRef.current;
+    if (!audio) return;
+
+    if (audio.paused) {
+      await audio.play();
+      setIsPlaying(true);
+    } else {
+      audio.pause();
+      setIsPlaying(false);
+    }
+  };
   return (
     <section
       id="hear-it-in-action"
@@ -157,7 +191,7 @@ export default function HearItInAction() {
                       type="button"
                       role="tab"
                       aria-selected={isActive}
-                      onClick={() => setActiveIndustry(ind.id)}
+                      onClick={() =>  handleIndustryChange(ind.id)}
                       className={cn(styles.pill, isActive && styles.pillActive)}
                     >
                       {Icon && <Icon size={14} strokeWidth={2.25} />}
@@ -184,12 +218,21 @@ export default function HearItInAction() {
 
                 <div className={styles.playerBody}>
                   <button
-                    type="button"
-                    className={styles.playButton}
-                    aria-label="Play sample conversation"
-                  >
-                    <Play size={22} strokeWidth={2.5} fill="currentColor" />
-                  </button>
+  type="button"
+  className={styles.playButton}
+  aria-label={isPlaying ? "Pause sample conversation" : "Play sample conversation"}
+  onClick={toggleAudio}
+>
+  <Play size={22} strokeWidth={2.5} fill="currentColor" />
+</button>
+
+<audio
+  ref={audioRef}
+  src={audioFiles[activeIndustry]}
+  preload="metadata"
+  onEnded={() => setIsPlaying(false)}
+/>
+
 
                   <div className={styles.playerWave} aria-hidden="true">
                     {Array.from({ length: 36 }).map((_, i) => {
