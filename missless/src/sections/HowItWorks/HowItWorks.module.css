@@ -1,0 +1,391 @@
+.section {
+  position: relative;
+  padding: var(--section-padding-y) 0;
+  overflow: hidden;
+  background-color: var(--color-white);
+}
+
+/* Subtle dotted background across the section (matches reference design) */
+.bgDots {
+  position: absolute;
+  inset: 0;
+  background-image: radial-gradient(
+    circle,
+    rgba(142, 88, 252, 0.07) 1px,
+    transparent 1.5px
+  );
+  background-size: 22px 22px;
+  pointer-events: none;
+  z-index: 0;
+}
+
+/* Soft purple-pink glow centered behind the hub */
+.bgGlow {
+  position: absolute;
+  inset: 0;
+  background:
+    radial-gradient(ellipse 35% 50% at 50% 55%, var(--color-soft-purple) 0%, transparent 60%),
+    radial-gradient(ellipse 25% 35% at 50% 55%, var(--color-soft-pink) 0%, transparent 70%);
+  z-index: 0;
+  opacity: 0.5;
+  pointer-events: none;
+}
+
+.container {
+  position: relative;
+  z-index: 1;
+  max-width: var(--container-max-width);
+  margin: 0 auto;
+  padding: 0 var(--container-padding-x);
+}
+
+/* ---------- Header ---------- */
+.header {
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--space-4);
+  max-width: 900px;
+  margin: 0 auto var(--space-16);
+}
+
+.badge {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-2);
+  padding: var(--space-2) var(--space-4);
+  background-color: var(--color-soft-blue);
+  color: var(--color-primary-blue);
+  border-radius: var(--radius-pill);
+  font-size: var(--font-size-xs);
+  font-weight: var(--font-weight-bold);
+  text-transform: uppercase;
+  letter-spacing: var(--letter-spacing-wider);
+}
+
+.headline {
+  font-size: var(--font-size-4xl);
+  line-height: 1.1;
+  letter-spacing: var(--letter-spacing-tighter);
+  font-weight: var(--font-weight-extrabold);
+}
+
+/* Solid primary blue, NOT a gradient — matches the reference design */
+.headlineAccent {
+  color: var(--color-primary-blue);
+}
+
+.subcopy {
+  font-size: var(--font-size-md);
+  line-height: var(--line-height-relaxed);
+  color: var(--color-text-body);
+  max-width: 60ch;
+}
+
+/* ---------- Flow ---------- */
+.flow {
+  position: relative;
+  display: grid;
+  grid-template-columns: 1fr auto 1fr;
+  gap: var(--space-6);
+  align-items: center;
+  max-width: 1100px;
+  margin: 0 auto;
+}
+
+/* Connector lines span the entire flow area */
+.connectors {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  z-index: 0;
+}
+
+.col {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-4);
+  position: relative;
+  z-index: 2;
+}
+
+/* ---------- Cards (links) ---------- */
+.inputCard,
+.outputCard {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+  padding: var(--space-4) var(--space-5);
+  background-color: var(--color-white);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-xl);
+  box-shadow: var(--shadow-sm);
+  text-decoration: none;
+  color: inherit;
+  transition: transform var(--transition-base),
+    box-shadow var(--transition-base),
+    border-color var(--transition-base);
+}
+
+.inputCard:hover,
+.outputCard:hover {
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-md);
+  border-color: var(--color-soft-blue);
+}
+
+.inputCard:focus-visible,
+.outputCard:focus-visible {
+  outline: 3px solid var(--color-primary-blue);
+  outline-offset: 2px;
+}
+
+.cardIcon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 40px;
+  height: 40px;
+  border-radius: var(--radius-md);
+  flex-shrink: 0;
+}
+
+.tint--blue { background-color: var(--color-soft-blue); color: var(--color-primary-blue); }
+.tint--purple { background-color: var(--color-soft-purple); color: var(--color-purple); }
+.tint--pink { background-color: var(--color-soft-pink); color: var(--color-pink); }
+
+.cardLabel {
+  font-size: var(--font-size-sm);
+  font-weight: var(--font-weight-semibold);
+  color: var(--color-text-primary);
+  flex: 1;
+}
+
+.cardBody {
+  flex: 1;
+  min-width: 0;
+}
+
+.cardTitle {
+  font-size: var(--font-size-sm);
+  font-weight: var(--font-weight-bold);
+  color: var(--color-text-primary);
+}
+
+.cardDesc {
+  font-size: var(--font-size-xs);
+  color: var(--color-text-muted);
+}
+
+/* Navigational chevron on each card's right edge */
+.cardChevron {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--color-text-muted);
+  flex-shrink: 0;
+  transition: transform var(--transition-base), color var(--transition-base);
+}
+
+.inputCard:hover .cardChevron,
+.outputCard:hover .cardChevron {
+  color: var(--color-primary-blue);
+  transform: translateX(2px);
+}
+
+/* ---------- Hub ---------- */
+.hubCol {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-4);
+  z-index: 1;
+}
+
+/* The flow arrows between joining-point and hub on each side */
+.flowArrow {
+  position: relative;
+  z-index: 2;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  background-color: var(--color-white);
+  color: var(--color-primary-blue);
+  box-shadow: 0 4px 12px rgba(37, 99, 235, 0.15),
+    0 0 0 1px rgba(37, 99, 235, 0.08);
+  text-decoration: none;
+  transition: transform var(--transition-base),
+    box-shadow var(--transition-base),
+    background-color var(--transition-base);
+}
+
+.flowArrow:hover {
+  transform: scale(1.08);
+  background-color: var(--color-primary-blue);
+  color: var(--color-white);
+  box-shadow: 0 6px 20px rgba(37, 99, 235, 0.3);
+}
+
+.flowArrow:focus-visible {
+  outline: 3px solid var(--color-primary-blue);
+  outline-offset: 3px;
+}
+
+.flowArrowLeft svg {
+  transform: translateX(1px);
+}
+
+.flowArrowRight svg {
+  transform: translateX(1px);
+}
+
+/* Hub link wraps the circle + pill */
+.hub {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--space-3);
+  text-decoration: none;
+  color: inherit;
+  transition: transform var(--transition-base);
+}
+
+.hub:hover {
+  transform: scale(1.03);
+}
+
+.hub:focus-visible {
+  outline: none;
+}
+
+.hub:focus-visible .hubCircle {
+  outline: 3px solid var(--color-primary-blue);
+  outline-offset: 6px;
+}
+
+.hubCircle {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 160px;
+  height: 160px;
+  border-radius: 50%;
+  background: radial-gradient(circle at 50% 50%, #ffffff 0%, #f3edff 100%);
+  box-shadow:
+    0 0 0 10px rgba(255, 255, 255, 0.6),
+    0 0 0 22px rgba(142, 88, 252, 0.08),
+    0 0 0 36px rgba(251, 57, 148, 0.05),
+    0 20px 50px rgba(142, 88, 252, 0.25);
+}
+
+.hubImg {
+  width: 65%;
+  height: 65%;
+  object-fit: contain;
+  display: block;
+}
+
+.hubPill {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-2);
+  padding: var(--space-1) var(--space-3);
+  background-color: var(--color-dark-navy);
+  color: var(--color-white);
+  border-radius: var(--radius-pill);
+  font-size: var(--font-size-xs);
+  font-weight: var(--font-weight-semibold);
+  white-space: nowrap;
+}
+
+.hubPillDot {
+  width: 6px;
+  height: 6px;
+  background-color: var(--color-accent-green);
+  border-radius: 50%;
+  box-shadow: 0 0 0 3px rgba(16, 185, 129, 0.3);
+  animation: hubPulse 2s ease-in-out infinite;
+}
+
+@keyframes hubPulse {
+  0%, 100% { transform: scale(1); }
+  50% { transform: scale(1.2); }
+}
+
+/* ---------- Closing line ---------- */
+.closing {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-3);
+  margin-top: var(--space-16);
+  padding-top: var(--space-8);
+  border-top: 1px solid var(--color-border);
+  font-size: var(--font-size-sm);
+  font-weight: var(--font-weight-semibold);
+  color: var(--color-text-body);
+}
+
+.closingCheck {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  background-color: var(--color-soft-blue);
+  color: var(--color-primary-blue);
+}
+
+/* ---------- Responsive ---------- */
+@media (max-width: 1024px) {
+  .flow {
+    grid-template-columns: 1fr;
+    gap: var(--space-8);
+  }
+
+  .connectors {
+    display: none;
+  }
+
+  .col {
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: var(--space-3);
+  }
+
+  .inputCard,
+  .outputCard {
+    flex: 1 1 280px;
+    max-width: 360px;
+  }
+
+  .hubCol {
+    flex-direction: column;
+    gap: var(--space-4);
+    margin: 0 auto;
+  }
+
+  /* On mobile, the side arrows visually become vertical (above/below the hub) */
+  .flowArrowLeft svg,
+  .flowArrowRight svg {
+    transform: rotate(90deg);
+  }
+}
+
+@media (max-width: 640px) {
+  .hubCircle {
+    width: 120px;
+    height: 120px;
+  }
+}

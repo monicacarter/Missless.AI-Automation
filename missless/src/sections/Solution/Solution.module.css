@@ -1,0 +1,111 @@
+.section {
+  padding: var(--section-padding-y) 0;
+  background-color: var(--color-white);
+}
+
+.container {
+  max-width: 900px;
+  margin: 0 auto;
+  padding: 0 var(--container-padding-x);
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--space-5);
+}
+
+.badge {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-2);
+  padding: var(--space-2) var(--space-4);
+  background-color: var(--color-soft-blue);
+  color: var(--color-primary-blue);
+  border-radius: var(--radius-pill);
+  font-size: var(--font-size-xs);
+  font-weight: var(--font-weight-bold);
+  text-transform: uppercase;
+  letter-spacing: var(--letter-spacing-wider);
+}
+
+.headline {
+  font-size: var(--font-size-4xl);
+  line-height: 1.1;
+  letter-spacing: var(--letter-spacing-tighter);
+  font-weight: var(--font-weight-extrabold);
+  max-width: 18ch;
+}
+
+.brand {
+  color: var(--color-primary-blue);
+}
+
+.subcopy {
+  font-size: var(--font-size-md);
+  line-height: var(--line-height-relaxed);
+  color: var(--color-text-body);
+  max-width: 60ch;
+}
+
+.pillars {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: var(--space-8);
+  margin-top: var(--space-6);
+}
+
+.pillar {
+  position: relative;
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+  padding-right: var(--space-8);
+}
+
+.pillar:last-child {
+  padding-right: 0;
+}
+
+.pillarIcon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 48px;
+  height: 48px;
+  border-radius: var(--radius-lg);
+  background-color: var(--color-soft-blue);
+  color: var(--color-primary-blue);
+}
+
+.pillarLabel {
+  font-size: var(--font-size-md);
+  font-weight: var(--font-weight-bold);
+  color: var(--color-text-primary);
+}
+
+.divider {
+  position: absolute;
+  right: 0;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 1px;
+  height: 32px;
+  background-color: var(--color-border);
+}
+
+@media (max-width: 640px) {
+  .pillars {
+    flex-direction: column;
+    gap: var(--space-5);
+  }
+
+  .pillar {
+    padding-right: 0;
+  }
+
+  .divider {
+    display: none;
+  }
+}

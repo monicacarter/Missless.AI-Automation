@@ -1,0 +1,282 @@
+import { useState } from 'react';
+import {
+  AudioLines,
+  Zap,
+  ShieldCheck,
+  Play,
+  CheckCircle2,
+  Phone,
+  MessageSquare,
+  Calendar,
+  Home,
+  Landmark,
+  Heart,
+  Building2,
+  ShoppingBag,
+  GraduationCap,
+  Headphones,
+} from 'lucide-react';
+import Button from '../../components/Button/index.js';
+import { hearItIndustries, hearItTrustRow, hearItStats, siteMeta } from '../../data/siteData.js';
+import { cn } from '../../utils/helpers.js';
+import styles from './HearItInAction.module.css';
+
+const iconMap = {
+  AudioLines,
+  Zap,
+  ShieldCheck,
+  Phone,
+  MessageSquare,
+  Calendar,
+  Home,
+  Landmark,
+  Heart,
+  Building2,
+  ShoppingBag,
+  GraduationCap,
+};
+
+/**
+ * HearItInAction — Section 2.
+ *
+ * Left: text content with the section's signature blue "Missless" word,
+ * hand-drawn underline accent, CTAs, and three trust items.
+ *
+ * Right: industry-picker player card. Pills control which industry is active.
+ * Below that card, a dark navy stats bar visually overlaps the bottom-right.
+ */
+export default function HearItInAction() {
+  const [activeIndustry, setActiveIndustry] = useState(hearItIndustries[0].id);
+
+  return (
+    <section
+      id="hear-it-in-action"
+      className={styles.section}
+      aria-labelledby="hear-it-heading"
+    >
+      <div className={styles.bgGlow} aria-hidden="true" />
+
+      <div className={styles.container}>
+        <div className={styles.grid}>
+          {/* LEFT: text */}
+          <div className={styles.content}>
+            <span className={styles.badge}>
+              <AudioLines size={16} strokeWidth={2.25} aria-hidden="true" />
+              Hear it in action
+            </span>
+
+            <h2 id="hear-it-heading" className={styles.headline}>
+              Listen to a real{' '}
+              <span className={styles.brandWord}>Missless</span>
+              <br />
+              conversation
+              <svg
+                className={styles.underline}
+                viewBox="0 0 220 14"
+                fill="none"
+                aria-hidden="true"
+              >
+                <path
+                  d="M 4 8 Q 60 -2, 110 6 T 216 8"
+                  stroke="var(--color-primary-blue)"
+                  strokeWidth="3"
+                  strokeLinecap="round"
+                />
+              </svg>
+            </h2>
+
+            <p className={styles.subcopy}>
+              Pick an industry and hear how Missless handles a live customer call.
+            </p>
+
+            <div className={styles.ctas}>
+              <Button
+                href={siteMeta.bookDemoHref}
+                variant="primary"
+                size="md"
+                iconLeft={<Calendar size={16} strokeWidth={2.25} />}
+                showArrow
+              >
+                Book a demo
+              </Button>
+              <Button
+                href="#hear-it-in-action"
+                variant="secondary"
+                size="md"
+                iconLeft={
+                  <span className={styles.playPill} aria-hidden="true">
+                    <Play size={10} strokeWidth={2.5} fill="currentColor" />
+                  </span>
+                }
+              >
+                See Missless in action
+              </Button>
+            </div>
+
+            <ul className={styles.trustRow}>
+              {hearItTrustRow.map((item) => {
+                const Icon = iconMap[item.icon];
+                return (
+                  <li key={item.title} className={styles.trustItem}>
+                    <span
+                      className={cn(
+                        styles.trustIcon,
+                        styles[`tint--${item.tint}`]
+                      )}
+                      aria-hidden="true"
+                    >
+                      {Icon && <Icon size={18} strokeWidth={2} />}
+                    </span>
+                    <div>
+                      <div className={styles.trustTitle}>{item.title}</div>
+                      <div className={styles.trustDesc}>{item.description}</div>
+                    </div>
+                  </li>
+                );
+              })}
+            </ul>
+          </div>
+
+          {/* RIGHT: player + stats bar */}
+          <div className={styles.playerArea}>
+            <div className={styles.playerCard}>
+              <h3 className={styles.playerHeading}>Choose an industry</h3>
+
+              {/* Industry pills */}
+              <div
+                className={styles.pills}
+                role="tablist"
+                aria-label="Choose an industry"
+              >
+                {hearItIndustries.map((ind) => {
+                  const Icon = iconMap[ind.icon];
+                  const isActive = activeIndustry === ind.id;
+                  return (
+                    <button
+                      key={ind.id}
+                      type="button"
+                      role="tab"
+                      aria-selected={isActive}
+                      onClick={() => setActiveIndustry(ind.id)}
+                      className={cn(styles.pill, isActive && styles.pillActive)}
+                    >
+                      {Icon && <Icon size={14} strokeWidth={2.25} />}
+                      <span>{ind.label}</span>
+                    </button>
+                  );
+                })}
+              </div>
+
+              {/* Player panel */}
+              <div className={styles.player}>
+                <div className={styles.playerHeader}>
+                  <div className={styles.playerLabel}>
+                    {
+                      hearItIndustries.find((i) => i.id === activeIndustry)?.label
+                    }{' '}
+                    · <span>30 seconds</span>
+                  </div>
+                  <span className={styles.livePreviewPill}>
+                    <span className={styles.livePreviewDot} aria-hidden="true" />
+                    Live preview
+                  </span>
+                </div>
+
+                <div className={styles.playerBody}>
+                  <button
+                    type="button"
+                    className={styles.playButton}
+                    aria-label="Play sample conversation"
+                  >
+                    <Play size={22} strokeWidth={2.5} fill="currentColor" />
+                  </button>
+
+                  <div className={styles.playerWave} aria-hidden="true">
+                    {Array.from({ length: 36 }).map((_, i) => {
+                      const heights = [10, 18, 28, 14, 24, 32, 16, 26, 12, 30, 20];
+                      return (
+                        <span
+                          key={i}
+                          className={styles.playerWaveBar}
+                          style={{ height: `${heights[i % heights.length]}px` }}
+                        />
+                      );
+                    })}
+                  </div>
+
+                  <ul className={styles.checklist}>
+                    {[
+                      'Greets naturally',
+                      'Qualifies the caller',
+                      'Books the appointment',
+                    ].map((c) => (
+                      <li key={c} className={styles.checkItem}>
+                        <CheckCircle2
+                          size={16}
+                          strokeWidth={2.25}
+                          className={styles.checkIcon}
+                          aria-hidden="true"
+                        />
+                        <span>{c}</span>
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+
+                <div className={styles.playerFooter}>
+                  <span>00:00 / 00:30</span>
+                </div>
+              </div>
+
+              <div className={styles.footerStrip}>
+                <Headphones
+                  size={16}
+                  strokeWidth={2.25}
+                  className={styles.headphonesIcon}
+                  aria-hidden="true"
+                />
+                <span>Hear a real conversation powered by Missless AI.</span>
+                <span className={styles.miniWave} aria-hidden="true">
+                  {Array.from({ length: 16 }).map((_, i) => {
+                    const h = [4, 8, 12, 6, 10, 14, 8][i % 7];
+                    return (
+                      <span
+                        key={i}
+                        className={styles.miniWaveBar}
+                        style={{ height: `${h}px` }}
+                      />
+                    );
+                  })}
+                </span>
+              </div>
+            </div>
+
+            {/* Dark stats bar overlapping the card */}
+            <div className={styles.statsBar}>
+              {hearItStats.map((stat) => {
+                const Icon = iconMap[stat.icon];
+                return (
+                  <div key={stat.label} className={styles.statsItem}>
+                    <span
+                      className={cn(
+                        styles.statsIcon,
+                        styles[`statsTint--${stat.tint}`]
+                      )}
+                      aria-hidden="true"
+                    >
+                      {Icon && <Icon size={20} strokeWidth={2} />}
+                    </span>
+                    <div>
+                      <div className={styles.statsValue}>{stat.value}</div>
+                      <div className={styles.statsLabel}>{stat.label}</div>
+                    </div>
+                  </div>
+                );
+              })}
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+  );
+}

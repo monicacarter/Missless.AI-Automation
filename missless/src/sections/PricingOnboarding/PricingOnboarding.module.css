@@ -1,0 +1,328 @@
+.section {
+  padding: var(--section-padding-y) 0;
+  background-color: var(--color-white);
+}
+
+.container {
+  max-width: var(--container-max-width);
+  margin: 0 auto;
+  padding: 0 var(--container-padding-x);
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: var(--space-6);
+}
+
+/* ---------- Shared card badge ---------- */
+.cardBadge {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-2);
+  margin-bottom: var(--space-6);
+}
+
+.cardBadgeTile {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 32px;
+  height: 32px;
+  border-radius: var(--radius-md);
+}
+
+.cardBadgeTileBlue {
+  background-color: var(--color-soft-blue);
+  color: var(--color-primary-blue);
+}
+
+.cardBadgeTileDark {
+  background-color: rgba(255, 255, 255, 0.1);
+  color: var(--color-soft-purple);
+}
+
+.cardBadgeText {
+  font-size: var(--font-size-xs);
+  font-weight: var(--font-weight-bold);
+  text-transform: uppercase;
+  letter-spacing: var(--letter-spacing-wider);
+  color: var(--color-primary-blue);
+}
+
+.cardBadgeTextPurple {
+  font-size: var(--font-size-xs);
+  font-weight: var(--font-weight-bold);
+  text-transform: uppercase;
+  letter-spacing: var(--letter-spacing-wider);
+  color: var(--color-soft-purple);
+}
+
+/* ---------- Pricing card (left) ---------- */
+.pricingCard {
+  position: relative;
+  background-color: var(--color-light-tint);
+  border-radius: var(--radius-3xl);
+  padding: var(--space-10);
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
+
+.pricingHeadline {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-1);
+  margin-bottom: var(--space-5);
+  font-size: var(--font-size-3xl);
+  line-height: 1.1;
+  letter-spacing: var(--letter-spacing-tighter);
+  font-weight: var(--font-weight-extrabold);
+}
+
+.pricingLine1 { color: var(--color-text-primary); }
+.pricingLine2,
+.pricingLine3 { color: var(--color-primary-blue); }
+
+.cardCopy {
+  font-size: var(--font-size-sm);
+  line-height: var(--line-height-relaxed);
+  color: var(--color-text-body);
+  margin-bottom: var(--space-6);
+  max-width: 44ch;
+}
+
+.pricingCtas {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-3);
+}
+
+/* Decorative curve + floating icons */
+.pricingDecoration {
+  position: relative;
+  flex: 1;
+  min-height: 120px;
+  margin: var(--space-6) 0;
+}
+
+.decoCurve {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+}
+
+.floatIcon {
+  position: absolute;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 36px;
+  height: 36px;
+  border-radius: var(--radius-md);
+  background-color: var(--color-white);
+  box-shadow: var(--shadow-md);
+}
+
+.floatIconBlue {
+  top: 50px;
+  left: 10%;
+  color: var(--color-primary-blue);
+}
+
+.floatIconBlue2 {
+  top: 30px;
+  left: 50%;
+  color: var(--color-primary-blue);
+}
+
+.floatIconPink {
+  top: 10px;
+  right: 8%;
+  color: var(--color-pink);
+}
+
+/* Bottom callout */
+.pricingCallout {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+  padding: var(--space-3) var(--space-4);
+  background-color: var(--color-soft-blue);
+  border-radius: var(--radius-xl);
+  font-size: var(--font-size-sm);
+  font-weight: var(--font-weight-semibold);
+  color: var(--color-primary-blue);
+  margin-top: auto;
+}
+
+.pricingCalloutIcon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  background-color: var(--color-primary-blue);
+  color: var(--color-white);
+  flex-shrink: 0;
+}
+
+/* ---------- Onboarding card (right, dark) ---------- */
+.onboardingCard {
+  position: relative;
+  background-color: var(--color-dark-navy);
+  border-radius: var(--radius-3xl);
+  padding: var(--space-10);
+  color: var(--color-white);
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+}
+
+.onboardingHeadline {
+  font-size: var(--font-size-3xl);
+  line-height: 1.1;
+  letter-spacing: var(--letter-spacing-tighter);
+  font-weight: var(--font-weight-extrabold);
+  margin-bottom: var(--space-8);
+  color: var(--color-white);
+}
+
+.onboardingHeadline em {
+  font-style: italic;
+}
+
+/* Timeline */
+.timeline {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-5);
+  margin-bottom: var(--space-8);
+  flex: 1;
+}
+
+.step {
+  display: grid;
+  grid-template-columns: auto 1fr;
+  gap: var(--space-4);
+  position: relative;
+}
+
+.stepLeft {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.stepNumber {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  font-size: var(--font-size-sm);
+  font-weight: var(--font-weight-bold);
+  color: var(--color-white);
+  flex-shrink: 0;
+  z-index: 1;
+}
+
+.stepNumber--blue { background-color: var(--color-primary-blue); }
+.stepNumber--purple { background-color: var(--color-purple); }
+.stepNumber--pink { background-color: var(--color-pink); }
+
+.stepConnector {
+  position: absolute;
+  top: 32px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 2px;
+  height: 100%;
+  background-image: linear-gradient(
+    180deg,
+    rgba(255, 255, 255, 0.15) 50%,
+    transparent 50%
+  );
+  background-size: 2px 8px;
+}
+
+.stepBody {
+  padding-top: 2px;
+}
+
+.stepTitle {
+  font-size: var(--font-size-md);
+  font-weight: var(--font-weight-bold);
+  margin-bottom: var(--space-1);
+  color: var(--color-white);
+}
+
+.stepDesc {
+  font-size: var(--font-size-sm);
+  line-height: var(--line-height-relaxed);
+  color: rgba(255, 255, 255, 0.7);
+}
+
+/* Bottom callout */
+.onboardingCallout {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+  padding: var(--space-3) var(--space-4);
+  background-color: rgba(255, 255, 255, 0.06);
+  border-radius: var(--radius-xl);
+  font-size: var(--font-size-sm);
+  color: rgba(255, 255, 255, 0.85);
+  margin-top: auto;
+}
+
+.onboardingCalloutIcon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--color-yellow);
+  flex-shrink: 0;
+}
+
+.onboardingHighlight {
+  color: var(--color-yellow);
+  font-weight: var(--font-weight-bold);
+}
+
+.dotPattern {
+  position: absolute;
+  top: 30px;
+  right: 30px;
+  width: 120px;
+  height: 120px;
+  background-image: radial-gradient(
+    circle,
+    rgba(255, 255, 255, 0.12) 1px,
+    transparent 1.5px
+  );
+  background-size: 12px 12px;
+  pointer-events: none;
+}
+
+/* ---------- Responsive ---------- */
+@media (max-width: 1024px) {
+  .grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 640px) {
+  .pricingCard,
+  .onboardingCard {
+    padding: var(--space-6);
+  }
+
+  .pricingHeadline,
+  .onboardingHeadline {
+    font-size: var(--font-size-2xl);
+  }
+}

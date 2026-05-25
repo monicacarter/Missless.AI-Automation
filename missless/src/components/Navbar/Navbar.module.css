@@ -1,0 +1,261 @@
+.header {
+  position: sticky;
+  top: 0;
+  z-index: var(--z-navbar);
+  background-color: var(--color-light-tint);
+  border-bottom: 1px solid rgba(37, 99, 235, 0.06);
+  backdrop-filter: saturate(180%) blur(8px);
+}
+
+.nav {
+  width: 100%;
+}
+
+.inner {
+  width: 100%;
+  max-width: var(--container-max-width);
+  margin: 0 auto;
+  padding: var(--space-4) var(--container-padding-x);
+  display: grid;
+  grid-template-columns: auto 1fr auto;
+  align-items: center;
+  gap: var(--space-6);
+  position: relative;
+}
+
+/* ---------- Logo zone ---------- */
+.logoZone {
+  display: flex;
+  align-items: center;
+}
+
+/* ---------- Center links ---------- */
+.links {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-8);
+}
+
+.linkItem {
+  position: relative;
+}
+
+.link {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-1);
+  font-family: var(--font-family-display);
+  font-size: var(--font-size-sm);
+  font-weight: var(--font-weight-semibold);
+  color: var(--color-text-primary);
+  padding: var(--space-2) var(--space-2);
+  border-radius: var(--radius-md);
+  transition: color var(--transition-base);
+  background: none;
+  cursor: pointer;
+}
+
+.link:hover,
+.linkActive {
+  color: var(--color-primary-blue);
+}
+
+.chevron {
+  transition: transform var(--transition-base);
+}
+
+.chevronOpen {
+  transform: rotate(180deg);
+}
+
+/* ---------- CTA zone ---------- */
+.ctaZone {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+}
+
+/* ---------- Mega menu panel ---------- */
+.megaMenu {
+  position: absolute;
+  top: calc(100% + 12px);
+  left: 50%;
+  transform: translateX(-50%);
+  background-color: var(--color-white);
+  border-radius: var(--radius-2xl);
+  box-shadow: var(--shadow-xl);
+  border: 1px solid var(--color-border);
+  padding: var(--space-3);
+  min-width: 460px;
+  z-index: var(--z-dropdown);
+  animation: megaMenuIn 200ms ease;
+}
+
+.megaMenuProducts {
+  min-width: 420px;
+}
+
+@keyframes megaMenuIn {
+  from {
+    opacity: 0;
+    transform: translateX(-50%) translateY(-6px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(-50%) translateY(0);
+  }
+}
+
+.megaMenuGrid {
+  display: grid;
+  gap: var(--space-1);
+}
+
+.megaMenuItem {
+  display: grid;
+  grid-template-columns: auto 1fr auto;
+  align-items: center;
+  gap: var(--space-3);
+  padding: var(--space-3);
+  border-radius: var(--radius-lg);
+  transition: background-color var(--transition-base);
+  color: var(--color-text-primary);
+}
+
+.megaMenuItem:hover {
+  background-color: var(--color-light-tint);
+}
+
+.megaMenuIcon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 40px;
+  height: 40px;
+  border-radius: var(--radius-md);
+  background-color: var(--color-soft-blue);
+  color: var(--color-primary-blue);
+  flex-shrink: 0;
+}
+
+.megaMenuText {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.megaMenuName {
+  font-size: var(--font-size-sm);
+  font-weight: var(--font-weight-bold);
+  color: var(--color-text-primary);
+}
+
+.megaMenuDesc {
+  font-size: var(--font-size-xs);
+  color: var(--color-text-muted);
+  line-height: var(--line-height-normal);
+}
+
+.megaMenuArrow {
+  display: inline-flex;
+  color: var(--color-text-muted);
+  transition: transform var(--transition-base), color var(--transition-base);
+}
+
+.megaMenuItem:hover .megaMenuArrow {
+  color: var(--color-primary-blue);
+  transform: translateX(3px);
+}
+
+/* ---------- Hamburger (mobile) ---------- */
+.hamburger {
+  display: none;
+  align-items: center;
+  justify-content: center;
+  width: 40px;
+  height: 40px;
+  color: var(--color-text-primary);
+  border-radius: var(--radius-md);
+}
+
+.hamburger:hover {
+  background-color: rgba(37, 99, 235, 0.06);
+}
+
+/* ---------- Mobile drawer ---------- */
+.mobileDrawer {
+  display: none;
+}
+
+.mobileList,
+.mobileSubList {
+  display: flex;
+  flex-direction: column;
+}
+
+.mobileLink,
+.mobileSubLink,
+.mobileGroupLabel {
+  display: block;
+  padding: var(--space-4);
+  font-family: var(--font-family-display);
+  color: var(--color-text-primary);
+}
+
+.mobileLink,
+.mobileGroupLabel {
+  font-size: var(--font-size-md);
+  font-weight: var(--font-weight-bold);
+  border-bottom: 1px solid var(--color-border-light);
+}
+
+.mobileSubLink {
+  font-size: var(--font-size-sm);
+  font-weight: var(--font-weight-medium);
+  color: var(--color-text-body);
+  padding-left: var(--space-8);
+  border-bottom: 1px solid var(--color-border-light);
+}
+
+.mobileCta {
+  padding: var(--space-5);
+}
+
+/* ---------- Responsive ---------- */
+@media (max-width: 1024px) {
+  .links,
+  .ctaZone {
+    display: none;
+  }
+
+  .hamburger {
+    display: inline-flex;
+    justify-self: end;
+  }
+
+  .inner {
+    grid-template-columns: auto 1fr;
+  }
+
+  .mobileDrawer {
+    display: block;
+    background-color: var(--color-white);
+    border-top: 1px solid var(--color-border-light);
+    max-height: calc(100vh - 72px);
+    overflow-y: auto;
+  }
+}
+
+/* ---------- Inline logo styles ---------- */
+.logoLink {
+  display: inline-flex;
+  align-items: center;
+  line-height: 0;
+}
+
+.logoImage {
+  height: 40px;
+  width: auto;
+  display: block;
+}

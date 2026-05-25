@@ -1,0 +1,238 @@
+.section {
+  padding: var(--section-padding-y) 0;
+  background-color: var(--color-soft-purple);
+  background: linear-gradient(180deg, #f5f0ff 0%, #fdf4ff 100%);
+}
+
+.container {
+  max-width: var(--container-max-width);
+  margin: 0 auto;
+  padding: 0 var(--container-padding-x);
+}
+
+.card {
+  position: relative;
+  background: var(--gradient-bg-dark-cta);
+  border-radius: var(--radius-4xl);
+  padding: var(--space-20) var(--space-12);
+  overflow: hidden;
+  box-shadow: var(--shadow-2xl);
+}
+
+/* Decorative dot patterns */
+.dotPattern {
+  position: absolute;
+  width: 200px;
+  height: 200px;
+  background-image: radial-gradient(
+    circle,
+    rgba(255, 255, 255, 0.15) 1px,
+    transparent 1.5px
+  );
+  background-size: 14px 14px;
+  pointer-events: none;
+}
+
+.dotsTopLeft {
+  top: 30px;
+  left: 30px;
+}
+
+.dotsBottomRight {
+  bottom: 30px;
+  right: 30px;
+}
+
+/* Concentric rings */
+.rings {
+  position: absolute;
+  bottom: -50px;
+  left: 80px;
+  width: 240px;
+  height: 240px;
+  opacity: 0.6;
+}
+
+/* Sparkles */
+.sparkle {
+  position: absolute;
+  color: var(--color-purple);
+  font-size: 18px;
+  font-weight: var(--font-weight-bold);
+  opacity: 0.6;
+  animation: sparkleFade 3s ease-in-out infinite;
+}
+
+.sparkle1 {
+  top: 25%;
+  left: 12%;
+}
+
+.sparkle2 {
+  top: 60%;
+  right: 18%;
+  animation-delay: 1.5s;
+}
+
+@keyframes sparkleFade {
+  0%, 100% { opacity: 0.6; transform: scale(1); }
+  50% { opacity: 0.9; transform: scale(1.1); }
+}
+
+/* ---------- Content ---------- */
+.content {
+  position: relative;
+  z-index: 1;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--space-6);
+  max-width: 760px;
+  margin: 0 auto;
+}
+
+.headline {
+  font-size: var(--font-size-5xl);
+  line-height: 1.05;
+  letter-spacing: var(--letter-spacing-tighter);
+  font-weight: var(--font-weight-extrabold);
+  color: var(--color-white);
+}
+
+.headline em {
+  font-style: italic;
+}
+
+.accentWrap {
+  position: relative;
+  display: inline-block;
+}
+
+.underline {
+  position: absolute;
+  bottom: -10px;
+  left: 0;
+  width: 100%;
+  height: 14px;
+}
+
+.subcopy {
+  font-size: var(--font-size-md);
+  line-height: var(--line-height-relaxed);
+  color: rgba(255, 255, 255, 0.8);
+  max-width: 56ch;
+}
+
+.highlight {
+  color: #60a5fa;
+  font-weight: var(--font-weight-bold);
+}
+
+.ctas {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: var(--space-3);
+  margin-top: var(--space-2);
+}
+
+.calendarTile {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 24px;
+  height: 24px;
+  border-radius: var(--radius-sm);
+  background-color: var(--color-soft-blue);
+  color: var(--color-primary-blue);
+}
+
+.playTile {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 22px;
+  height: 22px;
+  border-radius: 50%;
+  background-color: rgba(255, 255, 255, 0.15);
+  color: var(--color-soft-purple);
+}
+
+/* Trust strip */
+.trust {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: center;
+  gap: var(--space-5);
+  margin-top: var(--space-6);
+}
+
+.trustItem {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-2);
+  font-size: var(--font-size-sm);
+  font-weight: var(--font-weight-medium);
+  color: rgba(255, 255, 255, 0.85);
+  position: relative;
+}
+
+.trustIcon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  background-color: rgba(96, 165, 250, 0.2);
+  color: #93c5fd;
+}
+
+.trustDivider {
+  width: 1px;
+  height: 16px;
+  background-color: rgba(255, 255, 255, 0.15);
+  margin-left: var(--space-5);
+}
+
+/* ---------- Responsive ---------- */
+@media (max-width: 1024px) {
+  .card {
+    padding: var(--space-16) var(--space-6);
+  }
+
+  .headline {
+    font-size: var(--font-size-4xl);
+  }
+}
+
+@media (max-width: 640px) {
+  .card {
+    padding: var(--space-12) var(--space-5);
+  }
+
+  .headline {
+    font-size: var(--font-size-3xl);
+  }
+
+  .ctas {
+    flex-direction: column;
+    width: 100%;
+  }
+
+  .ctas > * {
+    width: 100%;
+  }
+
+  .trustDivider {
+    display: none;
+  }
+
+  .dotsTopLeft,
+  .dotsBottomRight {
+    width: 100px;
+    height: 100px;
+  }
+}
