@@ -405,3 +405,64 @@
     gap: var(--space-3);
   }
 }
+.playButton {
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.playButtonActive {
+  animation: playPulse 1.2s ease-in-out infinite;
+  box-shadow: 0 0 0 8px rgba(37, 99, 235, 0.12);
+}
+
+.pauseIcon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 4px;
+  width: 22px;
+  height: 22px;
+}
+
+.pauseIcon span {
+  display: block;
+  width: 5px;
+  height: 16px;
+  border-radius: 999px;
+  background: currentColor;
+}
+
+.playerWaveBar {
+  opacity: 0.35;
+  transition: opacity 0.2s ease, transform 0.2s ease;
+  transform-origin: center;
+}
+
+.playerWaveBarActive {
+  opacity: 1;
+}
+
+.playerWaveBarPlaying {
+  animation: wavePulse 0.9s ease-in-out infinite;
+}
+
+@keyframes playPulse {
+  0%,
+  100% {
+    transform: scale(1);
+  }
+
+  50% {
+    transform: scale(1.06);
+  }
+}
+
+@keyframes wavePulse {
+  0%,
+  100% {
+    transform: scaleY(0.75);
+  }
+
+  50% {
+    transform: scaleY(1.18);
+  }
+}

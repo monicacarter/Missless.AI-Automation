@@ -1,3 +1,4 @@
+import { Link } from "react-router-dom";
 import { ArrowRight } from 'lucide-react';
 import { cn } from '../../utils/helpers.js';
 import styles from './Button.module.css';
@@ -52,19 +53,32 @@ export default function Button({
   );
 
   if (href) {
-    const isExternal = href.startsWith('http');
+  const isExternal = href.startsWith("http");
+
+  if (isExternal) {
     return (
       <a
         href={href}
         className={classes}
         aria-label={ariaLabel}
-        target={isExternal ? '_blank' : undefined}
-        rel={isExternal ? 'noopener noreferrer' : undefined}
+        target="_blank"
+        rel="noopener noreferrer"
       >
         {content}
       </a>
     );
   }
+
+  return (
+    <Link
+      to={href}
+      className={classes}
+      aria-label={ariaLabel}
+    >
+      {content}
+    </Link>
+  );
+}
 
   return (
     <button

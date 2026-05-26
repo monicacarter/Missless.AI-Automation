@@ -49,20 +49,24 @@ export default function HearItInAction() {
   const [activeIndustry, setActiveIndustry] = useState(hearItIndustries[0].id);
   const audioRef = useRef(null);
   const [isPlaying, setIsPlaying] = useState(false);
+const [currentTime, setCurrentTime] = useState(0);
+const [duration, setDuration] = useState(0);
 
-  const audioFiles = {
-    home: "/audio/home-services.mp3",
-    financial: "/audio/financial-services.mp3",
-    healthcare: "/audio/healthcare.mp3",
-    "real-estate": "/audio/real-estate.mp3",
-    retail: "/audio/retail.mp3",
-    education: "/audio/education.mp3",
-  };
+const audioFiles = {
+"home-services": "/Missless.AI-Automation/audio/home-services.mp3",
+"financial-services": "/Missless.AI-Automation/audio/financial-services.mp3",
+  healthcare: "/Missless.AI-Automation/audio/healthcare.mp3",
+  "real-estate": "/Missless.AI-Automation/audio/real-estate.mp3",
+  retail: "/Missless.AI-Automation/audio/retail.mp3",
+  education: "/Missless.AI-Automation/audio/education.mp3",
+};
+
 
   const handleIndustryChange = (industryId) => {
     setActiveIndustry(industryId);
     setIsPlaying(false);
-
+setCurrentTime(0);
+setDuration(0);
     if (audioRef.current) {
       audioRef.current.pause();
       audioRef.current.currentTime = 0;
@@ -82,6 +86,16 @@ export default function HearItInAction() {
       setIsPlaying(false);
     }
   };
+  const formatTime = (time) => {
+  if (!time || Number.isNaN(time)) return "00:00";
+
+  const minutes = Math.floor(time / 60);
+  const seconds = Math.floor(time % 60);
+
+  return `${String(minutes).padStart(2, "0")}:${String(seconds).padStart(2, "0")}`;
+};
+
+const progress = duration ? currentTime / duration : 0;
   return (
     <section
       id="hear-it-in-action"
@@ -217,35 +231,61 @@ export default function HearItInAction() {
                 </div>
 
                 <div className={styles.playerBody}>
-                  <button
+  <button
   type="button"
-  className={styles.playButton}
+  className={cn(styles.playButton, isPlaying && styles.playButtonActive)}
   aria-label={isPlaying ? "Pause sample conversation" : "Play sample conversation"}
   onClick={toggleAudio}
 >
-  <Play size={22} strokeWidth={2.5} fill="currentColor" />
+  {isPlaying ? (
+    <span className={styles.pauseIcon}>
+      <span />
+      <span />
+    </span>
+  ) : (
+    <Play size={22} strokeWidth={2.5} fill="currentColor" />
+  )}
 </button>
 
 <audio
   ref={audioRef}
   src={audioFiles[activeIndustry]}
   preload="metadata"
-  onEnded={() => setIsPlaying(false)}
+  onLoadedMetadata={() => {
+    setDuration(audioRef.current?.duration || 0);
+  }}
+  onTimeUpdate={() => {
+    setCurrentTime(audioRef.current?.currentTime || 0);
+  }}
+  onEnded={() => {
+    setIsPlaying(false);
+    setCurrentTime(0);
+  }}
 />
 
 
-                  <div className={styles.playerWave} aria-hidden="true">
-                    {Array.from({ length: 36 }).map((_, i) => {
-                      const heights = [10, 18, 28, 14, 24, 32, 16, 26, 12, 30, 20];
-                      return (
-                        <span
-                          key={i}
-                          className={styles.playerWaveBar}
-                          style={{ height: `${heights[i % heights.length]}px` }}
-                        />
-                      );
-                    })}
-                  </div>
+             <div className={styles.playerWave} aria-hidden="true">
+  {Array.from({ length: 36 }).map((_, i) => {
+    const heights = [10, 18, 28, 14, 24, 32, 16, 26, 12, 30, 20];
+    const barProgress = (i + 1) / 36;
+    const isActiveBar = barProgress <= progress;
+
+    return (
+      <span
+        key={i}
+        className={cn(
+          styles.playerWaveBar,
+          isActiveBar && styles.playerWaveBarActive,
+          isPlaying && styles.playerWaveBarPlaying
+        )}
+        style={{
+          height: `${heights[i % heights.length]}px`,
+          animationDelay: `${i * 0.04}s`,
+        }}
+      />
+    );
+  })}
+</div>
 
                   <ul className={styles.checklist}>
                     {[
@@ -267,7 +307,9 @@ export default function HearItInAction() {
                 </div>
 
                 <div className={styles.playerFooter}>
-                  <span>00:00 / 00:30</span>
+                  <span>
+                  {formatTime(currentTime)} / {formatTime(duration)}
+                  </span>
                 </div>
               </div>
 

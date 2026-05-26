@@ -1,0 +1,799 @@
+/* =========================================================================
+   BOOKING FLOW — Section 12 (/book-a-demo page)
+   3-step booking with form, calendar, time picker (with timezone selector),
+   and confirmation screen.
+   ========================================================================= */
+
+.section {
+  position: relative;
+  padding: var(--space-16) 0 var(--section-padding-y);
+  overflow: hidden;
+  background:
+    radial-gradient(ellipse 50% 60% at 0% 0%, var(--color-soft-blue) 0%, transparent 60%),
+    radial-gradient(ellipse 50% 60% at 100% 100%, var(--color-soft-pink) 0%, transparent 60%),
+    linear-gradient(180deg, #f8fbff 0%, #ffffff 60%);
+}
+
+.container {
+  position: relative;
+  z-index: 1;
+  max-width: 900px;
+  margin: 0 auto;
+  padding: 0 var(--container-padding-x);
+}
+
+/* =========================================================================
+   HEADER
+   ========================================================================= */
+.header {
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--space-4);
+  margin-bottom: var(--space-12);
+}
+
+.badge {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-2);
+  padding: var(--space-2) var(--space-4);
+  background-color: var(--color-soft-blue);
+  color: var(--color-primary-blue);
+  border-radius: var(--radius-pill);
+  font-size: var(--font-size-xs);
+  font-weight: var(--font-weight-bold);
+  text-transform: uppercase;
+  letter-spacing: var(--letter-spacing-wider);
+}
+
+.headline {
+  font-size: var(--font-size-5xl);
+  line-height: 1.05;
+  letter-spacing: var(--letter-spacing-tighter);
+  font-weight: var(--font-weight-extrabold);
+}
+
+.headline em {
+  font-style: italic;
+}
+
+.subcopy {
+  font-size: var(--font-size-md);
+  line-height: var(--line-height-relaxed);
+  color: var(--color-text-body);
+  max-width: 56ch;
+}
+
+.featurePills {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: var(--space-2);
+  margin-top: var(--space-2);
+}
+
+.pill {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-2);
+  padding: var(--space-2) var(--space-4);
+  background-color: var(--color-white);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-pill);
+  font-size: var(--font-size-xs);
+  font-weight: var(--font-weight-semibold);
+  color: var(--color-text-body);
+}
+
+.pill svg {
+  color: var(--color-primary-blue);
+}
+
+/* =========================================================================
+   STEP INDICATOR
+   ========================================================================= */
+.stepIndicator {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: var(--space-2);
+  margin-bottom: var(--space-8);
+  flex-wrap: wrap;
+}
+
+.stepItem {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-3);
+  color: var(--color-text-muted);
+  font-size: var(--font-size-sm);
+  font-weight: var(--font-weight-semibold);
+}
+
+.stepBubble {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  background-color: var(--color-white);
+  border: 1.5px solid var(--color-border);
+  color: var(--color-text-muted);
+  font-size: var(--font-size-xs);
+  font-weight: var(--font-weight-bold);
+  flex-shrink: 0;
+  transition: all var(--transition-base);
+}
+
+.stepItemActive {
+  color: var(--color-text-primary);
+}
+
+.stepItemActive .stepBubble {
+  background-color: var(--color-primary-blue);
+  border-color: var(--color-primary-blue);
+  color: var(--color-white);
+  box-shadow: 0 0 0 4px rgba(37, 99, 235, 0.15);
+}
+
+.stepItemDone {
+  color: var(--color-primary-blue);
+}
+
+.stepItemDone .stepBubble {
+  background-color: var(--color-soft-blue);
+  border-color: var(--color-soft-blue);
+  color: var(--color-primary-blue);
+}
+
+.stepLabel {
+  font-size: var(--font-size-sm);
+}
+
+.stepDivider {
+  width: 32px;
+  height: 1.5px;
+  background-color: var(--color-border);
+  margin: 0 var(--space-2);
+}
+
+.stepItemDone + .stepDivider,
+.stepItemDone ~ .stepDivider {
+  background-color: var(--color-soft-blue);
+}
+
+/* =========================================================================
+   PANEL (shared card wrap for each step)
+   ========================================================================= */
+.panel {
+  background-color: var(--color-white);
+  border-radius: var(--radius-3xl);
+  padding: var(--space-10);
+  box-shadow: var(--shadow-lg);
+}
+
+.stepHeading {
+  font-size: var(--font-size-2xl);
+  font-weight: var(--font-weight-extrabold);
+  letter-spacing: var(--letter-spacing-tight);
+  margin-bottom: var(--space-2);
+}
+
+.stepSubheading {
+  font-size: var(--font-size-sm);
+  color: var(--color-text-body);
+  line-height: var(--line-height-relaxed);
+  margin-bottom: var(--space-8);
+  max-width: 60ch;
+}
+
+.stepActions {
+  display: flex;
+  justify-content: flex-end;
+  gap: var(--space-3);
+  margin-top: var(--space-8);
+  flex-wrap: wrap;
+}
+
+.stepActionsBetween {
+  justify-content: space-between;
+}
+
+/* =========================================================================
+   STEP 1 — FORM
+   ========================================================================= */
+.form {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-5);
+}
+
+.formGrid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: var(--space-5);
+}
+
+.field {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+}
+
+.fieldFull {
+  grid-column: 1 / -1;
+}
+
+.fieldLabel {
+  font-size: var(--font-size-xs);
+  font-weight: var(--font-weight-bold);
+  color: var(--color-text-primary);
+  letter-spacing: 0.02em;
+}
+
+.required {
+  color: var(--color-pink);
+}
+
+.inputWrap {
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+
+.inputIcon {
+  position: absolute;
+  left: var(--space-4);
+  color: var(--color-text-muted);
+  pointer-events: none;
+}
+
+.inputWrap input,
+.inputWrap textarea {
+  width: 100%;
+  padding: var(--space-3) var(--space-4) var(--space-3) calc(var(--space-4) + 20px + var(--space-2));
+  background-color: var(--color-surface-alt);
+  border: 1.5px solid var(--color-border);
+  border-radius: var(--radius-lg);
+  font-family: var(--font-family-body);
+  font-size: var(--font-size-sm);
+  color: var(--color-text-primary);
+  transition: border-color var(--transition-base), box-shadow var(--transition-base), background-color var(--transition-base);
+}
+
+.inputWrap input::placeholder,
+.inputWrap textarea::placeholder {
+  color: var(--color-text-muted);
+}
+
+.inputWrap input:hover,
+.inputWrap textarea:hover {
+  border-color: var(--color-soft-blue);
+}
+
+.inputWrap input:focus,
+.inputWrap textarea:focus {
+  outline: none;
+  background-color: var(--color-white);
+  border-color: var(--color-primary-blue);
+  box-shadow: 0 0 0 4px rgba(37, 99, 235, 0.15);
+}
+
+.inputWrapTextarea {
+  align-items: flex-start;
+}
+
+.inputWrapTextarea .inputIcon {
+  top: var(--space-3);
+}
+
+.inputWrap textarea {
+  resize: vertical;
+  min-height: 88px;
+  line-height: var(--line-height-relaxed);
+}
+
+/* Checkbox + legal */
+.checkbox {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--space-3);
+  font-size: var(--font-size-sm);
+  color: var(--color-text-body);
+  line-height: var(--line-height-relaxed);
+  cursor: pointer;
+}
+
+.checkbox input {
+  width: 18px;
+  height: 18px;
+  margin-top: 2px;
+  accent-color: var(--color-primary-blue);
+  cursor: pointer;
+  flex-shrink: 0;
+}
+
+.legalLine {
+  font-size: var(--font-size-xs);
+  color: var(--color-text-muted);
+  line-height: var(--line-height-relaxed);
+}
+
+/* =========================================================================
+   STEP 2 — CALENDAR
+   ========================================================================= */
+.calendarStep {
+  display: flex;
+  flex-direction: column;
+}
+
+.calendarCard {
+  background-color: var(--color-surface-alt);
+  border-radius: var(--radius-2xl);
+  padding: var(--space-6);
+}
+
+.calendarHeader {
+  display: grid;
+  grid-template-columns: auto 1fr auto;
+  align-items: center;
+  margin-bottom: var(--space-5);
+}
+
+.monthLabel {
+  text-align: center;
+  font-size: var(--font-size-md);
+  font-weight: var(--font-weight-bold);
+  color: var(--color-text-primary);
+}
+
+.monthNavBtn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  background-color: var(--color-white);
+  color: var(--color-text-primary);
+  box-shadow: var(--shadow-sm);
+  transition: all var(--transition-base);
+}
+
+.monthNavBtn:hover {
+  background-color: var(--color-primary-blue);
+  color: var(--color-white);
+}
+
+.calendarWeekdays {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  gap: var(--space-1);
+  margin-bottom: var(--space-2);
+}
+
+.calendarWeekdays span {
+  text-align: center;
+  font-size: var(--font-size-xs);
+  font-weight: var(--font-weight-bold);
+  color: var(--color-text-muted);
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  padding: var(--space-2) 0;
+}
+
+.calendarGrid {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  gap: var(--space-1);
+}
+
+.calendarDay {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  aspect-ratio: 1 / 1;
+  border-radius: var(--radius-md);
+  background-color: transparent;
+  color: var(--color-text-primary);
+  font-family: var(--font-family-display);
+  font-size: var(--font-size-sm);
+  font-weight: var(--font-weight-semibold);
+  cursor: pointer;
+  transition: all var(--transition-base);
+}
+
+.calendarDay:hover:not(:disabled) {
+  background-color: var(--color-soft-blue);
+  color: var(--color-primary-blue);
+}
+
+.calendarDay:disabled {
+  color: var(--color-border);
+  cursor: not-allowed;
+  background-color: transparent;
+}
+
+.calendarDayOtherMonth {
+  visibility: hidden;
+}
+
+.calendarDayToday {
+  position: relative;
+  color: var(--color-primary-blue);
+  font-weight: var(--font-weight-extrabold);
+}
+
+.calendarDayToday::after {
+  content: '';
+  position: absolute;
+  bottom: 4px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 4px;
+  height: 4px;
+  border-radius: 50%;
+  background-color: var(--color-primary-blue);
+}
+
+.calendarDaySelected {
+  background-color: var(--color-primary-blue) !important;
+  color: var(--color-white) !important;
+  box-shadow: 0 4px 12px rgba(37, 99, 235, 0.3);
+}
+
+/* =========================================================================
+   STEP 3 — TIME SLOTS + TIMEZONE
+   ========================================================================= */
+.timeStep {
+  display: flex;
+  flex-direction: column;
+}
+
+.timeStepDate {
+  color: var(--color-primary-blue);
+  font-weight: var(--font-weight-bold);
+}
+
+/* ---------- Timezone selector (mega-menu style) ---------- */
+.tzWrap {
+  position: relative;
+  margin-bottom: var(--space-6);
+  align-self: flex-start;
+  width: 100%;
+  max-width: 360px;
+}
+
+.tzTrigger {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+  width: 100%;
+  padding: var(--space-3) var(--space-4);
+  background-color: var(--color-white);
+  border: 1.5px solid var(--color-border);
+  border-radius: var(--radius-lg);
+  color: var(--color-text-primary);
+  text-align: left;
+  transition: all var(--transition-base);
+  cursor: pointer;
+}
+
+.tzTrigger:hover {
+  border-color: var(--color-primary-blue);
+  box-shadow: var(--shadow-sm);
+}
+
+.tzTriggerOpen {
+  border-color: var(--color-primary-blue);
+  box-shadow: 0 0 0 4px rgba(37, 99, 235, 0.12);
+}
+
+.tzGlobe {
+  color: var(--color-primary-blue);
+  flex-shrink: 0;
+}
+
+.tzTriggerLabel {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  flex: 1;
+  min-width: 0;
+}
+
+.tzTriggerEyebrow {
+  font-size: var(--font-size-xs);
+  font-weight: var(--font-weight-bold);
+  color: var(--color-text-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+.tzTriggerValue {
+  font-size: var(--font-size-sm);
+  font-weight: var(--font-weight-bold);
+  color: var(--color-text-primary);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.tzChevron {
+  color: var(--color-text-muted);
+  transition: transform var(--transition-base);
+  flex-shrink: 0;
+}
+
+.tzChevronOpen {
+  transform: rotate(180deg);
+  color: var(--color-primary-blue);
+}
+
+/* The dropdown panel — mirrors the Navbar mega-menu styling */
+.tzMenu {
+  position: absolute;
+  top: calc(100% + 8px);
+  left: 0;
+  right: 0;
+  min-width: 320px;
+  max-height: 360px;
+  overflow-y: auto;
+  background-color: var(--color-white);
+  border-radius: var(--radius-2xl);
+  box-shadow: var(--shadow-xl);
+  border: 1px solid var(--color-border);
+  padding: var(--space-2);
+  z-index: var(--z-dropdown);
+  animation: tzMenuIn 180ms ease;
+}
+
+@keyframes tzMenuIn {
+  from { opacity: 0; transform: translateY(-6px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.tzGroup {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-1);
+  padding: var(--space-2);
+}
+
+.tzGroup + .tzGroup {
+  border-top: 1px solid var(--color-border-light);
+  padding-top: var(--space-3);
+  margin-top: var(--space-2);
+}
+
+.tzGroupHeading {
+  font-size: var(--font-size-xs);
+  font-weight: var(--font-weight-bold);
+  color: var(--color-text-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  padding: var(--space-1) var(--space-3);
+}
+
+.tzList {
+  display: flex;
+  flex-direction: column;
+}
+
+.tzOption {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+  padding: var(--space-3);
+  border-radius: var(--radius-md);
+  background: none;
+  color: var(--color-text-primary);
+  font-family: var(--font-family-display);
+  font-size: var(--font-size-sm);
+  font-weight: var(--font-weight-semibold);
+  text-align: left;
+  cursor: pointer;
+  transition: background-color var(--transition-base), color var(--transition-base);
+}
+
+.tzOption:hover {
+  background-color: var(--color-light-tint);
+  color: var(--color-primary-blue);
+}
+
+.tzOptionActive {
+  background-color: var(--color-soft-blue);
+  color: var(--color-primary-blue);
+}
+
+.tzOptionActive svg {
+  color: var(--color-primary-blue);
+}
+
+/* ---------- Time slot grid ---------- */
+.timeGrid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: var(--space-3);
+}
+
+.timeSlot {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  padding: var(--space-3) var(--space-4);
+  background-color: var(--color-white);
+  border: 1.5px solid var(--color-border);
+  border-radius: var(--radius-lg);
+  color: var(--color-text-primary);
+  font-family: var(--font-family-display);
+  font-size: var(--font-size-sm);
+  font-weight: var(--font-weight-bold);
+  cursor: pointer;
+  transition: all var(--transition-base);
+  position: relative;
+}
+
+.timeSlot:hover {
+  border-color: var(--color-primary-blue);
+  background-color: var(--color-light-tint);
+}
+
+.timeSlotSelected {
+  background-color: var(--color-primary-blue);
+  border-color: var(--color-primary-blue);
+  color: var(--color-white);
+  box-shadow: 0 6px 18px rgba(37, 99, 235, 0.3);
+}
+
+.timeSlotIcon {
+  color: var(--color-primary-blue);
+  flex-shrink: 0;
+}
+
+.timeSlotSelected .timeSlotIcon {
+  color: var(--color-white);
+}
+
+.timeSlotLabel {
+  flex: 1;
+}
+
+.timeSlotDayHint {
+  font-size: 10px;
+  font-weight: var(--font-weight-bold);
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  color: var(--color-pink);
+  padding: 2px 6px;
+  background-color: var(--color-soft-pink);
+  border-radius: var(--radius-sm);
+}
+
+.timeSlotSelected .timeSlotDayHint {
+  background-color: rgba(255, 255, 255, 0.2);
+  color: var(--color-white);
+}
+
+/* =========================================================================
+   CONFIRMATION SCREEN
+   ========================================================================= */
+.confirm {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  gap: var(--space-4);
+  padding: var(--space-4) 0;
+}
+
+.confirmIcon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 72px;
+  height: 72px;
+  border-radius: 50%;
+  background-color: var(--color-soft-green);
+  color: var(--color-accent-green);
+  margin-bottom: var(--space-2);
+}
+
+.confirmHeading {
+  font-size: var(--font-size-3xl);
+  font-weight: var(--font-weight-extrabold);
+  letter-spacing: var(--letter-spacing-tighter);
+}
+
+.confirmSub {
+  font-size: var(--font-size-md);
+  line-height: var(--line-height-relaxed);
+  color: var(--color-text-body);
+  max-width: 50ch;
+}
+
+.confirmCard {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3);
+  padding: var(--space-5) var(--space-6);
+  background-color: var(--color-light-tint);
+  border-radius: var(--radius-xl);
+  margin: var(--space-4) 0;
+}
+
+.confirmRow {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-3);
+  font-size: var(--font-size-sm);
+  font-weight: var(--font-weight-semibold);
+  color: var(--color-text-primary);
+}
+
+.confirmRow svg {
+  color: var(--color-primary-blue);
+}
+
+.confirmFootnote {
+  font-size: var(--font-size-sm);
+  color: var(--color-text-muted);
+  line-height: var(--line-height-relaxed);
+  max-width: 48ch;
+}
+
+/* =========================================================================
+   RESPONSIVE
+   ========================================================================= */
+@media (max-width: 768px) {
+  .panel {
+    padding: var(--space-6);
+  }
+
+  .formGrid {
+    grid-template-columns: 1fr;
+  }
+
+  .timeGrid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .stepLabel {
+    display: none;
+  }
+
+  .stepDivider {
+    width: 20px;
+  }
+
+  .headline {
+    font-size: var(--font-size-4xl);
+  }
+}
+
+@media (max-width: 480px) {
+  .timeGrid {
+    grid-template-columns: 1fr;
+  }
+
+  .calendarCard {
+    padding: var(--space-4);
+  }
+
+  .stepActions {
+    flex-direction: column-reverse;
+  }
+
+  .stepActions > * {
+    width: 100%;
+  }
+
+  .stepActionsBetween {
+    flex-direction: column-reverse;
+  }
+}

@@ -429,6 +429,6 @@ export const siteMeta = {
   tagline: 'The AI front office that never misses a lead.',
   url: 'https://missless.com',
   copyrightYear: new Date().getFullYear(),
-  bookDemoHref: '#',
+  bookDemoHref: "/book-a-demo",
   contactHref: '#',
 };

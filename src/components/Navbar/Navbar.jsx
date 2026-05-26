@@ -70,6 +70,21 @@ function MegaMenuPanel({ items, onItemClick }) {
  */
 export default function Navbar() {
   const [openMenu, setOpenMenu] = useState(null);
+  const closeMenuTimer = useRef(null);
+
+const openMegaMenu = (menuKey) => {
+  if (closeMenuTimer.current) {
+    clearTimeout(closeMenuTimer.current);
+  }
+
+  setOpenMenu(menuKey);
+};
+
+const closeMegaMenu = () => {
+  closeMenuTimer.current = setTimeout(() => {
+    setOpenMenu(null);
+  }, 180);
+};
   const [mobileOpen, setMobileOpen] = useState(false);
   const navRef = useRef(null);
 
@@ -138,8 +153,8 @@ export default function Navbar() {
                   <li
                     key={link.label}
                     className={styles.linkItem}
-                    onMouseEnter={() => setOpenMenu(link.menuKey)}
-                    onMouseLeave={() => setOpenMenu(null)}
+                   onMouseEnter={() => openMegaMenu(link.menuKey)}
+onMouseLeave={closeMegaMenu}
                   >
                     <button
                       type="button"

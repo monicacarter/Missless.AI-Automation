@@ -1,5 +1,7 @@
-import MainLayout from './layouts/MainLayout.jsx';
-import Home from './pages/Home.jsx';
+import { Routes, Route } from "react-router-dom";
+import MainLayout from "./layouts/MainLayout.jsx";
+import Home from "./pages/Home.jsx";
+import BookDemo from "./pages/BookDemo.jsx";
 
 /**
  * App — single-page site. MainLayout wraps the navbar/footer; Home renders
@@ -7,8 +9,25 @@ import Home from './pages/Home.jsx';
  */
 export default function App() {
   return (
-    <MainLayout>
-      <Home />
-    </MainLayout>
+    <Routes>
+      <Route
+        path="/"
+        element={
+          <MainLayout>
+            <Home />
+          </MainLayout>
+        }
+      />
+
+      <Route
+        path="/book-a-demo"
+        element={
+          <MainLayout>
+            <BookDemo />
+          </MainLayout>
+        }
+      />
+    </Routes>
   );
 }
+
