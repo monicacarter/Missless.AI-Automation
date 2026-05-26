@@ -118,8 +118,11 @@ serve(async (req) => {
       }
     };
 
-  // Emails are disabled for now.
-// Bookings are saved in Supabase and can be reviewed in the demo_bookings table.
+ await sendEmail({
+  to: adminEmail,
+  subject: "New demo booking - Missless AI",
+  html: adminEmailHtml,
+});
 
     return new Response(JSON.stringify({ success: true }), {
       status: 200,
