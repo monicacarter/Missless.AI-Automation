@@ -1,4 +1,4 @@
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 import { useState, useEffect, useRef } from 'react';
 import {
   ChevronDown,
@@ -70,6 +70,8 @@ function MegaMenuPanel({ items, onItemClick }) {
  * Mobile drawer with body-scroll lock.
  */
 export default function Navbar() {
+  const location = useLocation();
+const isBookDemoPage = location.pathname === "/book-a-demo";
   const [openMenu, setOpenMenu] = useState(null);
   const closeMenuTimer = useRef(null);
 
@@ -188,9 +190,12 @@ onMouseLeave={closeMegaMenu}
 
           {/* CTA (right) */}
           <div className={styles.ctaZone}>
-            <Button href={siteMeta.bookDemoHref} variant="primary" size="md">
-              Book a demo
-            </Button>
+            <Button
+  href={isBookDemoPage ? "/Missless.AI-Automation/#contact" : siteMeta.bookDemoHref}
+  variant="primary"
+>
+  {isBookDemoPage ? "Contact us" : "Book a demo"}
+</Button>
           </div>
 
           {/* Mobile hamburger */}
