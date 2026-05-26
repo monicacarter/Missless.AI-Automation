@@ -1,3 +1,4 @@
+import { Link } from "react-router-dom";
 import { useState, useEffect, useRef } from 'react';
 import {
   ChevronDown,
@@ -134,13 +135,13 @@ const closeMegaMenu = () => {
         <div className={styles.inner}>
           {/* Logo (left) */}
           <div className={styles.logoZone}>
-            <a href="#hero" className={styles.logoLink} aria-label="Missless — Home">
-              <img
-                src={logoFull}
-                alt="Missless"
-                className={styles.logoImage}
-              />
-            </a>
+           <Link to="/" className={styles.logoLink} aria-label="Missless — Home">
+  <img
+    src={logoFull}
+    alt="Missless"
+    className={styles.logoImage}
+  />
+</Link>
           </div>
 
           {/* Center nav links (desktop) */}
