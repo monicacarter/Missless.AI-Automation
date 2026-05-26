@@ -728,28 +728,45 @@ export default function BookingFlow() {
     setViewMonth((m) => new Date(m.getFullYear(), m.getMonth() + delta, 1));
   };
 
-  const handleConfirm = async () => {
-    if (submitting) return;
-    setSubmitting(true);
-    try {
-      // Replace this endpoint with your real backend when ready.
-      // The fetch is wrapped in a no-op catch so the flow still completes
-      // for users even if the endpoint is not wired up yet.
-      await fetch('/api/book-demo', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          ...data,
-          date: selectedDate?.toISOString(),
-          timeSlot: selectedTimeSlot,
-          timeZone,
-        }),
-      }).catch(() => undefined);
-    } finally {
-      setSubmitting(false);
-      setStep('confirm');
+const handleConfirm = async () => {
+  if (submitting) return;
+
+  setSubmitting(true);
+
+  try {
+ const response = await fetch(
+  "https://iuktcirypushcamuakki.supabase.co/functions/v1/book-demo",
+  {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify({
+      customer_name: data.fullName,
+      customer_email: data.workEmail,
+      customer_phone: data.phone,
+      company_name: data.businessName,
+      company_website: "",
+      selected_date: selectedDate?.toISOString(),
+      selected_time: selectedTimeSlot,
+      selected_timezone: timeZone,
+    }),
+  }
+);
+
+    if (!response.ok) {
+      const result = await response.json().catch(() => null);
+      throw new Error(result?.error || "Booking request failed.");
     }
-  };
+
+    setStep("confirm");
+  } catch (error) {
+    console.error("Booking error:", error);
+    alert(error.message || "Sorry, something went wrong. Please try again.");
+  } finally {
+    setSubmitting(false);
+  }
+};
 
   return (
     <section
