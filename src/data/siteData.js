@@ -29,7 +29,7 @@ export const ANCHORS = {
 export const navLinks = [
   { label: 'Products', type: 'mega', menuKey: 'products' },
   { label: 'Industries', type: 'mega', menuKey: 'industries' },
-  { label: 'Pricing', type: 'link', href: ANCHORS.pricing },
+  { label: 'Pricing', type: 'link', href: '/pricing' },
   { label: 'About', type: 'link', href: '#' },
 ];
 
@@ -409,7 +409,7 @@ export const footerColumns = [
   {
     heading: 'Resources',
     links: [
-      { label: 'Pricing', href: ANCHORS.pricing },
+      { label: 'Pricing', href: '/pricing' },
       { label: 'Security', href: '#' },
       { label: 'Help Center', href: '#' },
       { label: 'Blog', href: '#' },
