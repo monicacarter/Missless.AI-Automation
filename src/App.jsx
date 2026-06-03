@@ -1,4 +1,4 @@
-import { Routes, Route } from "react-router-dom";
+import { HashRouter, Routes, Route } from "react-router-dom";
 import MainLayout from "./layouts/MainLayout.jsx";
 import Home from "./pages/Home.jsx";
 import BookDemo from "./pages/BookDemo.jsx";
@@ -10,6 +10,7 @@ import Pricing from "./pages/Pricing.jsx";
  */
 export default function App() {
   return (
+    <HashRouter>
     <Routes>
       <Route
         path="/"
@@ -38,5 +39,6 @@ export default function App() {
         }
       />
     </Routes>
+    <HashRouter>
   );
 }
