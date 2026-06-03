@@ -29,7 +29,7 @@ export const ANCHORS = {
 export const navLinks = [
   { label: 'Products', type: 'mega', menuKey: 'products' },
   { label: 'Industries', type: 'mega', menuKey: 'industries' },
-  { label: 'Pricing', type: 'link', href: '/Missless.AI-Automation/pricing' },
+  { label: 'Pricing', type: 'link', href: `${import.meta.env.BASE_URL}#/pricing` },
   { label: 'About', type: 'link', href: '#' },
 ];
 
@@ -409,7 +409,7 @@ export const footerColumns = [
   {
     heading: 'Resources',
     links: [
-      { label: 'Pricing', href:'/Missless.AI-Automation/pricing' },
+      { label: 'Pricing', href: `${import.meta.env.BASE_URL}#/pricing` },
       { label: 'Security', href: '#' },
       { label: 'Help Center', href: '#' },
       { label: 'Blog', href: '#' },
